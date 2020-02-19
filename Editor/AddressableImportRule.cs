@@ -45,6 +45,12 @@ public class AddressableImportRule
     public string path;
 
     /// <summary>
+    /// If enabled, the process will only check folders (though the process will have to be executed manually).
+    /// </summary>
+    [Tooltip("If enabled, the process will only check folders (though the process will have to be executed manually).")]
+    public bool onlyCheckFolders = false;
+
+    /// <summary>
     /// Method used to parse the Path.
     /// </summary>
     [Tooltip("The path parsing method.")]

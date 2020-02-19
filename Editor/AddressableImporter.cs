@@ -14,6 +14,11 @@ public class AddressableImporter : AssetPostprocessor
 {
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
+        OnPostprocessAllAssets(importedAssets, deletedAssets, movedAssets, movedFromAssetPaths, checkFolders: false);
+    }
+
+    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool checkFolders)
+    {
         var settings = AddressableAssetSettingsDefaultObject.Settings;
         var importSettings = AddressableImportSettings.Instance;
         if (importSettings == null) {
@@ -23,11 +28,11 @@ public class AddressableImporter : AssetPostprocessor
         else if (importSettings.rules == null || importSettings.rules.Count == 0)
             return;
         var entriesAdded = new List<AddressableAssetEntry>();
-        foreach (string assetPath in importedAssets)
+        foreach(string assetPath in importedAssets)
         {
             foreach (var rule in importSettings.rules)
             {
-                if (rule.Match(assetPath))
+                if (checkFolders == rule.onlyCheckFolders && rule.Match(assetPath))
                 {
                     var entry = CreateOrUpdateAddressableAssetEntry(settings, importSettings, rule, assetPath);
                     if (entry != null)
@@ -144,8 +149,8 @@ public class AddressableImporter : AssetPostprocessor
     /// </summary>
     public class FolderImporter
     {
-        [MenuItem("Assets/AddressablesImporter: Check Folder(s)")]
-        private static void CheckFolders()
+        [MenuItem("Assets/AddressablesImporter: Add assets from selected Folder(s) to Addressables Groups")]
+        private static void AddAssetsToAddressableGroups()
         {
             HashSet<string> filesToImport = new HashSet<string>();
             // Folders comes up as Object.
@@ -170,7 +175,7 @@ public class AddressableImporter : AssetPostprocessor
             if (filesToImport.Count > 0)
             {
                 Debug.Log($"AddressablesImporter: Found {filesToImport.Count} assets...");
-                OnPostprocessAllAssets(filesToImport.ToArray(), null, null, null);
+                OnPostprocessAllAssets(filesToImport.ToArray(), null, null, null, false);
             }
             else
             {
@@ -178,20 +183,49 @@ public class AddressableImporter : AssetPostprocessor
             }
         }
 
-        // Note that we pass the same path, and also pass "true" to the second argument.
-        [MenuItem("Assets/AddressablesImporter: Check Folder(s)", true)]
-        private static bool ValidateCheckFolders()
+        [MenuItem("Assets/AddressablesImporter: Add assets from selected Folder(s) to Addressables Groups", true)]
+        private static bool ValidateAddAssetsToAddressableGroups()
         {
             foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets))
             {
-                if (Directory.Exists(AssetDatabase.GetAssetPath(obj)))
+                if (!Directory.Exists(AssetDatabase.GetAssetPath(obj)))
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+
+            return true;
+        }
+
+        [MenuItem("Assets/AddressablesImporter : Add folders from selected Folder(s) to Addressables Groups")]
+        private static void AddFoldersToAddressableGroups()
+        {
+            HashSet<string> filesToImport = new HashSet<string>();
+
+            // Folders comes up as Object.
+            foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets))
+            {
+                filesToImport.Add(AssetDatabase.GetAssetPath(obj));
+            }
+
+            if (filesToImport.Count > 0)
+            {
+                OnPostprocessAllAssets(filesToImport.ToArray(), null, null, null, checkFolders: true);
+            }
+        }
+
+        [MenuItem("Assets/AddressablesImporter : Add folders from selected Folder(s) to Addressables Groups", true)]
+        private static bool ValidateAddFoldersToAddressableGroups()
+        {
+            foreach (UnityEngine.Object obj in Selection.GetFiltered(typeof(UnityEngine.Object), SelectionMode.Assets))
+            {
+                if (!Directory.Exists(AssetDatabase.GetAssetPath(obj)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
-
-
 }
