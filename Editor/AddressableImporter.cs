@@ -14,13 +14,13 @@ public class AddressableImporter : AssetPostprocessor
 {
     static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
     {
-        OnPostprocessAllAssets(importedAssets, deletedAssets, movedAssets, movedFromAssetPaths, checkFolders: false);
+        OnPostprocessAllAssetsAndFolders(importedAssets, deletedAssets, movedAssets, movedFromAssetPaths, checkFolders: false);
     }
 
-    static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool checkFolders)
+    static void OnPostprocessAllAssetsAndFolders(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool checkFolders)
     {
-        var settings = AddressableAssetSettingsDefaultObject.Settings;
         var importSettings = AddressableImportSettings.Instance;
+        var settings = AddressableAssetSettingsDefaultObject.Settings;
         if (importSettings == null) {
             Debug.LogFormat("[AddressableImporter] import settings file not found\nPlease go to Assets/AddressableAssetsData folder, right click in the project window and choose 'Create > Addressable Assets > Import Settings'.");
             return;
@@ -175,7 +175,7 @@ public class AddressableImporter : AssetPostprocessor
             if (filesToImport.Count > 0)
             {
                 Debug.Log($"AddressablesImporter: Found {filesToImport.Count} assets...");
-                OnPostprocessAllAssets(filesToImport.ToArray(), null, null, null, false);
+                OnPostprocessAllAssetsAndFolders(filesToImport.ToArray(), null, null, null, false);
             }
             else
             {
@@ -210,7 +210,7 @@ public class AddressableImporter : AssetPostprocessor
 
             if (filesToImport.Count > 0)
             {
-                OnPostprocessAllAssets(filesToImport.ToArray(), null, null, null, checkFolders: true);
+                OnPostprocessAllAssetsAndFolders(filesToImport.ToArray(), null, null, null, checkFolders: true);
             }
         }
 

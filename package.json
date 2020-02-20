@@ -1,8 +1,8 @@
 {
   "name": "com.kdark.addressable-importer",
   "displayName": "Unity Addressable Importer",
-  "version": "0.4.0",
-  "unity": "2018.3",
+  "version": "0.4.1",
+  "unity": "2019.2",
   "description": "A simple rule based addressable asset importer.",
   "dependencies": {
     "com.unity.addressables": "1.6.2"
