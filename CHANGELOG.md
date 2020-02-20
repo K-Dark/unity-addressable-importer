@@ -1,3 +1,17 @@
+# [0.4.0](https://github.com/K-Dark/unity-addressable-importer/compare/v0.3.1...v0.4.0) (2020-02-20)
+
+
+### Bug Fixes
+
+* bump semantic-release to v2.1.3 to solve dependencies issue ([c59b986](https://github.com/K-Dark/unity-addressable-importer/commit/c59b9865c744b01cec73e7bc1013301c67c630ed))
+* context menu path to create settings ([ea7b90a](https://github.com/K-Dark/unity-addressable-importer/commit/ea7b90a3336e1b80177c3dc991e819445c177a24))
+* no warnings for missing AddressableImportSettings [#15](https://github.com/K-Dark/unity-addressable-importer/issues/15) ([30dd56a](https://github.com/K-Dark/unity-addressable-importer/commit/30dd56a0823e0f370d775acbce06736a92c0dafb))
+
+
+### Features
+
+* deploy semantic-release ([d1c4c1b](https://github.com/K-Dark/unity-addressable-importer/commit/d1c4c1b79117b4eab55021d2485c606a2d9f4974))
+
 ## [0.5.1](https://github.com/favoyang/unity-addressable-importer/compare/v0.5.0...v0.5.1) (2020-02-02)
 
 
