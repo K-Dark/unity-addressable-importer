@@ -1,16 +1,16 @@
 {
-  "name": "com.littlebigfun.addressable-importer",
+  "name": "com.kdark.addressable-importer",
   "displayName": "Unity Addressable Importer",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "unity": "2018.3",
   "description": "A simple rule based addressable asset importer.",
   "dependencies": {
-    "com.unity.addressables": "1.1.5"
+    "com.unity.addressables": "1.6.2"
   },
   "author": {
     "name": "Favo Yang",
     "url": "https://github.com/favoyang"
   },
-  "repository": "https://github.com/favoyang/unity-addressable-importer.git",
+  "repository": "https://github.com/K-Dark/unity-addressable-importer.git",
   "license": "MIT"
 }
